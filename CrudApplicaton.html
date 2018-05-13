@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Add Edit and Delete in Tavle</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+
+	<style type="text/css">
+	    body{
+	    	background-image: url("image/10.jpg");
+			background-size: 100%;
+			background-repeat: no-repeat;
+	    }
+		.container{
+			overflow: hidden;
+			margin-top: 40px;
+		}
+		.tab{
+			float: left;
+		}
+		#table{
+			text-align: center;
+		}
+		.tab2{
+			margin-left: 150px;
+		}
+		.tab2 input{
+			display: block;
+			margin-bottom: 10px;
+			padding-left: 10px;
+		}
+		tr:hover{
+			background: blue; 
+			color: white;
+			cursor: pointer;
+		}
+	</style>
+</head>
+<body>
+
+	<div class="container">
+		<div class="tab tab1">
+			<table id="table" border="1">
+				<tr>
+					<th>First name</th>
+					<th>Last name</th>
+					<th>Age</th>
+				</tr>
+				<tr>
+					<td>Muntasir</td>
+					<td>Shahriar</td>
+					<td>23</td>
+				</tr>
+				<tr>
+					<td>Reaz</td>
+					<td>Murshed</td>
+					<td>24</td>
+				</tr>
+				<tr>
+					<td>Ashraf</td>
+					<td>Uddin</td>
+					<td>22</td>
+				</tr>
+			</table>
+		</div>
+
+		<div class="tab tab2">
+			First Name: <input type="text" name="fname" id="fname" placeholder="Enter First Name..">
+			Last Name: <input type="text" name="lname" id="lname" placeholder="Enter Last Name..">
+			Age: <input type="number" name="age" id="age" placeholder="Enter Age" >
+
+			<button class="btn btn-primary" type="button" onclick="AddTableRaw();">Add</button>
+			<button class="btn btn-warning" type="button" onclick="editTableRaw()">Edit</button>
+			<button class="btn btn-danger" type="button" onclick="removeTableRoe()">Delete</button>
+		</div>
+	</div>
+
+	<script>
+		var rIndex, 
+		table = document.getElementById('table');
+
+		function checkEmptyInput(){
+			var isEmpty = false,
+			    fname = document.getElementById('fname').value,
+			    lname = document.getElementById('lname').value,
+			    age = document.getElementById('age').value;
+
+			if(fname === ""){
+				alert("First name can not be Empty");
+				isEmpty = true;
+			}
+			else if(lname === ""){
+				alert("Last name can not be Empty");
+				isEmpty = true;
+			}
+			else if(age === ""){
+				alert("Age name can not be Empty");
+				isEmpty = true;
+			}
+		
+			return isEmpty;
+		}
+		
+
+
+		function AddTableRaw(){
+			if(!checkEmptyInput()){
+			var newRow = table.insertRow(table.length),
+			    cell1 = newRow.insertCell(0),
+			    cell2 = newRow.insertCell(1),
+			    cell3 = newRow.insertCell(2),
+
+			    fname = document.getElementById('fname').value,
+			    lname = document.getElementById('lname').value,
+			    age = document.getElementById('age').value;
+
+			    cell1.innerHTML = fname;
+			    cell2.innerHTML = lname;
+			    cell3.innerHTML = age;
+
+			    selectedRowToInput();
+		    }
+		}
+
+		function selectedRowToInput(){
+			for( var i=1; i<table.rows.length; i++){
+				table.rows[i].onclick = function(){
+					rIndex = this.rowIndex;
+				    document.getElementById('fname').value = this.cells[0].innerHTML;
+				   document.getElementById('lname').value = this.cells[1].innerHTML;
+				   document.getElementById('age').value = this.cells[2].innerHTML;
+				};
+			}
+
+		}
+		selectedRowToInput();
+
+		function editTableRaw(){
+			var fname = document.getElementById('fname').value,
+			    lname = document.getElementById('lname').value,
+			    age = document.getElementById('age').value;
+
+			if(!checkEmptyInput()){    
+
+			table.rows[rIndex].cells[0].innerHTML = fname;
+			table.rows[rIndex].cells[1].innerHTML = lname;
+			table.rows[rIndex].cells[2].innerHTML = age;
+		   }
+		}
+
+		function removeTableRoe(){
+			table.deleteRow(rIndex);
+
+			document.getElementById('fname').value = "";
+			document.getElementById('lname').value = "";
+			document.getElementById('age').value = "";
+
+		}
+
+	</script>
+
+</body>
+</html>
